@@ -9,20 +9,31 @@ auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'GET':
-        return render_template('register.html', form=RegistrationForm())
+    # Redirect to dashboard if user is already logged in
+    if current_user.is_authenticated:
+        return redirect(url_for('main.dashboard'))
     
     form = RegistrationForm()
-    if form.validate_on_submit():
-        user = User(
-            username=form.username.data,
-            email=form.email.data,
-            password_hash=generate_password_hash(form.password.data)
-        )
-        db.session.add(user)
-        db.session.commit()
-        flash('Registration successful! Please login.', 'success')
-        return redirect(url_for('auth.login'))
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            try:
+                user = User(
+                    username=form.username.data,
+                    email=form.email.data,
+                    password_hash=generate_password_hash(form.password.data)
+                )
+                db.session.add(user)
+                db.session.commit()
+                flash('Registration successful! Please login.', 'success')
+                return redirect(url_for('auth.login'))
+            except Exception as e:
+                db.session.rollback()
+                flash('An error occurred during registration. Please try again.', 'danger')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash(f'{getattr(form, field).label.text}: {error}', 'danger')
+    
     return render_template('register.html', form=form)
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
