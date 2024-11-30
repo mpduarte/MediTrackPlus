@@ -23,6 +23,20 @@
                         {{ form.frequency(class="form-select accessibility-focus") }}
                     </div>
                     <div class="mb-3">
+                        {{ form.scheduled_time.label(class="form-label") }}
+                        {{ form.scheduled_time(class="form-control accessibility-focus", placeholder="HH:MM") }}
+                        {% for error in form.scheduled_time.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.max_daily_doses.label(class="form-label") }}
+                        {{ form.max_daily_doses(class="form-control accessibility-focus", min="1") }}
+                        {% for error in form.max_daily_doses.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
                         {{ form.current_stock.label(class="form-label") }}
                         {{ form.current_stock(class="form-control accessibility-focus") }}
                     </div>
