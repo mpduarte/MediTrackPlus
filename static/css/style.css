@@ -1,0 +1,95 @@
+:root {
+    --primary-blue: #2C7BB8;
+    --mint-green: #7CCFB6;
+    --light-gray: #F5F7FA;
+    --dark-text: #2C3E50;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    color: var(--dark-text);
+    background-color: var(--light-gray);
+}
+
+.navbar {
+    background-color: var(--primary-blue);
+}
+
+.navbar-brand {
+    color: white !important;
+    font-weight: 600;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: var(--primary-blue);
+    color: white;
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.btn-primary {
+    background-color: var(--primary-blue);
+    border-color: var(--primary-blue);
+}
+
+.btn-success {
+    background-color: var(--mint-green);
+    border-color: var(--mint-green);
+}
+
+.form-check-input:checked {
+    background-color: var(--mint-green);
+    border-color: var(--mint-green);
+}
+
+.medication-header {
+    background-image: url('https://images.unsplash.com/photo-1471864190281-a93a3070b6de');
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    position: relative;
+}
+
+.medication-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(44, 123, 184, 0.7);
+}
+
+.pharmacy-bg {
+    background-image: url('https://images.unsplash.com/photo-1445510861639-5651173bc5d5');
+    background-size: cover;
+    background-position: center;
+    opacity: 0.1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+.stock-warning {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.accessibility-focus:focus {
+    outline: 3px solid var(--mint-green);
+    outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+    .card {
+        margin: 10px;
+    }
+}
