@@ -11,4 +11,6 @@ dependencies = [
     "flask-login>=0.6.3",
     "flask-wtf>=1.2.2",
     "werkzeug",
+    "pillow>=11.0.0",
+    "python-magic>=0.4.27",
 ]

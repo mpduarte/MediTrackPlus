@@ -4,10 +4,21 @@ from app import db
 from models import Medication, Consumption, InventoryLog
 from forms import MedicationForm, ConsumptionForm, InventoryUpdateForm
 import logging
+import os
+from werkzeug.utils import secure_filename
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+# Configure upload folder
+UPLOAD_FOLDER = 'static/uploads/prescriptions'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'pdf'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# Create upload directory if it doesn't exist
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 main_bp = Blueprint('main', __name__)
 
@@ -19,9 +30,10 @@ def home():
 @login_required
 def dashboard():
     medications = Medication.query.filter_by(user_id=current_user.id).all()
+    medications_dict = [med.to_dict() for med in medications]
     consumption_form = ConsumptionForm()
     return render_template('dashboard.html', 
-                         medications=medications,
+                         medications=medications_dict,
                          consumption_form=consumption_form)
 
 @main_bp.route('/inventory', methods=['GET', 'POST'])
@@ -137,6 +149,44 @@ def log_consumption(med_id):
         else:
             flash('Insufficient stock!', 'danger')
     return redirect(url_for('main.dashboard'))
+
+@main_bp.route('/upload_prescription/<int:med_id>', methods=['GET', 'POST'])
+@login_required
+def upload_prescription(med_id):
+    medication = Medication.query.get_or_404(med_id)
+    if medication.user_id != current_user.id:
+        flash('Unauthorized access!', 'danger')
+        return redirect(url_for('main.inventory'))
+    
+    form = PrescriptionForm()
+    if form.validate_on_submit():
+        try:
+            file = form.prescription_file.data
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file_path = os.path.join(UPLOAD_FOLDER, filename)
+                file.save(file_path)
+                
+                prescription = Prescription(
+                    medication_id=med_id,
+                    file_name=filename,
+                    file_path=file_path,
+                    expiry_date=form.expiry_date.data,
+                    notes=form.notes.data
+                )
+                
+                db.session.add(prescription)
+                db.session.commit()
+                flash('Prescription uploaded successfully!', 'success')
+                return redirect(url_for('main.inventory'))
+            else:
+                flash('Invalid file type. Please upload a PDF or image file.', 'danger')
+        except Exception as e:
+            db.session.rollback()
+            logger.error(f"Error uploading prescription: {str(e)}")
+            flash('An error occurred while uploading the prescription.', 'danger')
+    
+    return render_template('upload_prescription.html', form=form, medication=medication)
 
 @main_bp.route('/history')
 @login_required

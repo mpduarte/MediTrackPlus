@@ -28,6 +28,17 @@ class Medication(db.Model):
             Consumption.medication_id == self.id,
             db.func.date(Consumption.taken_at) == today
         ).count()
+        
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'dosage': self.dosage,
+            'frequency': self.frequency,
+            'current_stock': self.current_stock,
+            'scheduled_time': self.scheduled_time,
+            'max_daily_doses': self.max_daily_doses
+        }
 
 class Consumption(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -43,3 +54,13 @@ class InventoryLog(db.Model):
     quantity_change = db.Column(db.Integer, nullable=False)
     operation_type = db.Column(db.String(20), nullable=False)  # 'add' or 'remove'
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+class Prescription(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    medication_id = db.Column(db.Integer, db.ForeignKey('medication.id'), nullable=False)
+    file_name = db.Column(db.String(255), nullable=False)
+    file_path = db.Column(db.String(255), nullable=False)
+    upload_date = db.Column(db.DateTime, default=datetime.utcnow)
+    expiry_date = db.Column(db.DateTime, nullable=True)
+    notes = db.Column(db.Text, nullable=True)
+    medication = db.relationship('Medication', backref='prescriptions')

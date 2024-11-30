@@ -46,15 +46,11 @@
                                         </small>
                                     </div>
                                     <div class="d-flex align-items-center">
-                                        {% set doses_taken = medication.get_doses_taken_today() %}
-                                        <small class="text-muted me-3">
-                                            Taken today: {{ doses_taken }}/{{ medication.max_daily_doses }}
-                                        </small>
                                         <form method="POST" action="{{ url_for('main.log_consumption', med_id=medication.id) }}" class="d-inline">
                                             {{ consumption_form.csrf_token }}
                                             {{ consumption_form.quantity(class="form-control form-control-sm d-inline", style="width: 70px") }}
                                             {{ consumption_form.status(class="form-select form-select-sm d-inline ms-1", style="width: 100px") }}
-                                            {{ consumption_form.submit(class="btn btn-success btn-sm ms-2", disabled=(doses_taken >= medication.max_daily_doses)) }}
+                                            {{ consumption_form.submit(class="btn btn-success btn-sm ms-2") }}
                                         </form>
                                     </div>
                                 </div>

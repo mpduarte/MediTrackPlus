@@ -76,12 +76,18 @@
                                 </td>
                                 <td>{{ medication.created_at.strftime('%Y-%m-%d') }}</td>
                                 <td>
-                                    <button type="button" 
-                                            class="btn btn-sm btn-primary" 
-                                            data-bs-toggle="modal" 
-                                            data-bs-target="#updateModal{{ medication.id }}">
-                                        Update Stock
-                                    </button>
+                                    <div class="btn-group">
+                                        <button type="button" 
+                                                class="btn btn-sm btn-primary" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#updateModal{{ medication.id }}">
+                                            Update Stock
+                                        </button>
+                                        <a href="{{ url_for('main.upload_prescription', med_id=medication.id) }}" 
+                                           class="btn btn-sm btn-outline-primary">
+                                            Upload Prescription
+                                        </a>
+                                    </div>
                                     
                                     <!-- Stock Update Modal -->
                                     <div class="modal fade" id="updateModal{{ medication.id }}" tabindex="-1">
