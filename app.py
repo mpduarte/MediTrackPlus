@@ -14,10 +14,15 @@ def create_app():
     app = Flask(__name__)
     
     # Configure the secret key for sessions
-    app.secret_key = os.environ.get("FLASK_SECRET_KEY") or "a secret key"
+    app.secret_key = os.environ.get("FLASK_SECRET_KEY") or os.urandom(24)
     
     # Configure the database
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    
+    # Configure static files
+    app.config["STATIC_FOLDER"] = "static"
+    app.config["TEMPLATES_AUTO_RELOAD"] = True
     
     # Initialize extensions
     db.init_app(app)
