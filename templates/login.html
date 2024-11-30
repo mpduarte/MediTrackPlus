@@ -9,7 +9,13 @@
                     <h5 class="mb-0">Login</h5>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ url_for('auth.login') }}" class="needs-validation" novalidate>
+                    {% if request.args.get('next') and '/inventory' in request.args.get('next') %}
+                        <div class="alert alert-info mb-3">
+                            <i class="fas fa-info-circle"></i> You need to log in to access the medication inventory.
+                            After logging in, you'll be automatically redirected to the inventory page.
+                        </div>
+                    {% endif %}
+                    <form method="POST" action="{{ url_for('auth.login', next=request.args.get('next')) }}" class="needs-validation" novalidate>
                         {{ form.hidden_tag() }}
                         <div class="mb-3">
                             {{ form.email.label(class="form-label") }}
