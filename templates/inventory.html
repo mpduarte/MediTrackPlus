@@ -55,8 +55,45 @@
                                 <td>{{ medication.name }}</td>
                                 <td>{{ medication.dosage }}</td>
                                 <td>{{ medication.frequency }}</td>
-                                <td class="stock-level">{{ medication.current_stock }}</td>
+                                <td>
+                                    <span class="stock-level {% if medication.current_stock < 5 %}stock-warning{% endif %}">
+                                        {{ medication.current_stock }}
+                                    </span>
+                                </td>
                                 <td>{{ medication.created_at.strftime('%Y-%m-%d') }}</td>
+                                <td>
+                                    <button type="button" 
+                                            class="btn btn-sm btn-primary" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#updateModal{{ medication.id }}">
+                                        Update Stock
+                                    </button>
+                                    
+                                    <!-- Stock Update Modal -->
+                                    <div class="modal fade" id="updateModal{{ medication.id }}" tabindex="-1">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Update Stock - {{ medication.name }}</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="POST" action="{{ url_for('main.update_stock', med_id=medication.id) }}" class="needs-validation" novalidate>
+                                                        {{ update_form.csrf_token }}
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Current Stock: {{ medication.current_stock }}</label>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            {{ update_form.quantity.label(class="form-label") }}
+                                                            {{ update_form.quantity(class="form-control") }}
+                                                        </div>
+                                                        {{ update_form.submit(class="btn btn-primary") }}
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
