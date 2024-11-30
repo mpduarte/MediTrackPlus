@@ -44,15 +44,27 @@ class MedicationForm(FlaskForm):
                                  ('twice_daily', 'Twice Daily'),
                                  ('weekly', 'Weekly')],
                           validators=[DataRequired()])
+    scheduled_time = StringField('Time of Day (HH:MM)', 
+                               validators=[DataRequired(),
+                                         Regexp('^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$',
+                                               message='Please use HH:MM format (e.g. 09:00)')])
+    max_daily_doses = IntegerField('Maximum Daily Doses',
+                                validators=[DataRequired(),
+                                          NumberRange(min=1, max=10)])
     current_stock = IntegerField('Current Stock', 
-                               validators=[DataRequired(), 
-                                         NumberRange(min=0)])
+                                validators=[DataRequired(), 
+                                          NumberRange(min=0)])
     submit = SubmitField('Add Medication')
 
 class ConsumptionForm(FlaskForm):
     quantity = IntegerField('Quantity', 
                           validators=[DataRequired(), 
                                     NumberRange(min=1)])
+    status = SelectField('Status',
+                        choices=[('taken', 'Taken'),
+                                ('missed', 'Missed'),
+                                ('skipped', 'Skipped')],
+                        default='taken')
     submit = SubmitField('Log Consumption')
 
 class InventoryUpdateForm(FlaskForm):

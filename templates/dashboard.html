@@ -15,21 +15,51 @@
             </div>
             <div class="card-body">
                 {% if medications %}
-                    {% for medication in medications %}
-                        <div class="d-flex justify-content-between align-items-center mb-3 p-2 border-bottom">
-                            <div>
-                                <h6 class="mb-1">{{ medication.name }}</h6>
-                                <small class="text-muted">{{ medication.dosage }} - {{ medication.frequency }}</small>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <span class="stock-level me-3">Stock: {{ medication.current_stock }}</span>
-                                <form method="POST" action="{{ url_for('log_consumption', med_id=medication.id) }}" class="d-inline">
-                                    {{ consumption_form.csrf_token }}
-                                    {{ consumption_form.quantity(class="form-control form-control-sm d-inline", style="width: 70px") }}
-                                    {{ consumption_form.submit(class="btn btn-success btn-sm ms-2") }}
-                                </form>
-                            </div>
-                        </div>
+                    {% set frequency_groups = {
+                        'daily': 'Daily Medications',
+                        'twice_daily': 'Twice Daily Medications',
+                        'weekly': 'Weekly Medications'
+                    } %}
+                    
+                    {% for freq, title in frequency_groups.items() %}
+                        {% set meds = medications|selectattr('frequency', 'equalto', freq)|list %}
+                        {% if meds %}
+                            <h6 class="mt-3 mb-3">{{ title }}</h6>
+                            {% for medication in meds|sort(attribute='scheduled_time') %}
+                                <div class="medication-item d-flex justify-content-between align-items-center mb-3 p-3 border rounded {% if medication.current_stock < 5 %}bg-light-warning{% endif %}">
+                                    <div>
+                                        <h6 class="mb-1">{{ medication.name }}</h6>
+                                        <small class="text-muted">
+                                            {{ medication.dosage }} - 
+                                            {% if medication.scheduled_time %}
+                                                {{ medication.scheduled_time }}
+                                            {% else %}
+                                                Schedule not set
+                                            {% endif %}
+                                        </small>
+                                        <br>
+                                        <small class="{% if medication.current_stock < 5 %}text-danger{% else %}text-muted{% endif %}">
+                                            Stock: {{ medication.current_stock }}
+                                            {% if medication.current_stock < 5 %}
+                                                (Low Stock!)
+                                            {% endif %}
+                                        </small>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        {% set doses_taken = medication.get_doses_taken_today() %}
+                                        <small class="text-muted me-3">
+                                            Taken today: {{ doses_taken }}/{{ medication.max_daily_doses }}
+                                        </small>
+                                        <form method="POST" action="{{ url_for('main.log_consumption', med_id=medication.id) }}" class="d-inline">
+                                            {{ consumption_form.csrf_token }}
+                                            {{ consumption_form.quantity(class="form-control form-control-sm d-inline", style="width: 70px") }}
+                                            {{ consumption_form.status(class="form-select form-select-sm d-inline ms-1", style="width: 100px") }}
+                                            {{ consumption_form.submit(class="btn btn-success btn-sm ms-2", disabled=(doses_taken >= medication.max_daily_doses)) }}
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
                     {% endfor %}
                 {% else %}
                     <p class="text-center">No medications added yet.</p>
