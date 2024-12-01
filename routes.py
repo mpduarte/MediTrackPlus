@@ -202,6 +202,19 @@ def history():
     medications = Medication.query.filter_by(user_id=current_user.id).all()
     return render_template('history.html', medications=medications)
 
+@main_bp.route('/medication/<int:med_id>/delete', methods=['POST'])
+@login_required
+def delete_medication(med_id):
+    medication = Medication.query.filter_by(id=med_id, user_id=current_user.id).first_or_404()
+    try:
+        db.session.delete(medication)
+        db.session.commit()
+        flash('Medication deleted successfully', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash('An error occurred while deleting the medication', 'danger')
+    return redirect(url_for('main.inventory'))
+
 
 @main_bp.route('/reports')
 @login_required

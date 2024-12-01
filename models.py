@@ -19,8 +19,8 @@ class Medication(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     scheduled_time = db.Column(db.String(50))  # Store time in HH:MM format
     max_daily_doses = db.Column(db.Integer, default=1)
-    consumptions = db.relationship('Consumption', backref='medication', lazy=True)
-    inventory_logs = db.relationship('InventoryLog', backref='medication', lazy=True)
+    consumptions = db.relationship('Consumption', backref='medication', lazy=True, cascade='all, delete-orphan')
+    inventory_logs = db.relationship('InventoryLog', backref='medication', lazy=True, cascade='all, delete-orphan')
     
     def get_doses_taken_today(self):
         today = datetime.utcnow().date()
