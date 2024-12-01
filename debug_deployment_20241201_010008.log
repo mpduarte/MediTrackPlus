@@ -1,0 +1,78 @@
+2024-12-01 01:00:08,786 - INFO - [__main__] - === Starting Deployment Process ===
+File "/home/runner/MediTrackPlus/deploy.py", line 312, in main
+
+2024-12-01 01:00:08,786 - INFO - [__main__] - Deployment ID: 20241201_010008
+File "/home/runner/MediTrackPlus/deploy.py", line 313, in main
+
+2024-12-01 01:00:08,786 - WARNING - [__main__] - No existing Flask application to stop: name 'workflows_stop_tool' is not defined
+File "/home/runner/MediTrackPlus/deploy.py", line 321, in main
+
+2024-12-01 01:00:08,787 - INFO - [__main__] - Performing initial dependency check...
+File "/home/runner/MediTrackPlus/deploy.py", line 324, in main
+
+2024-12-01 01:00:08,787 - INFO - [__main__] - === Checking Service Dependencies ===
+File "/home/runner/MediTrackPlus/deploy.py", line 34, in check_service_dependencies
+
+2024-12-01 01:00:09,145 - INFO - [__main__] - Database connection: OK
+File "/home/runner/MediTrackPlus/deploy.py", line 48, in check_service_dependencies
+
+2024-12-01 01:00:09,146 - INFO - [__main__] - File system access: OK
+File "/home/runner/MediTrackPlus/deploy.py", line 59, in check_service_dependencies
+
+2024-12-01 01:00:09,146 - INFO - [__main__] - Port 3000 is available
+File "/home/runner/MediTrackPlus/deploy.py", line 194, in check_port_availability
+
+2024-12-01 01:00:09,146 - INFO - [__main__] - Environment variables: OK
+File "/home/runner/MediTrackPlus/deploy.py", line 71, in check_service_dependencies
+
+2024-12-01 01:00:09,146 - INFO - [__main__] - === Dependencies Status Summary ===
+File "/home/runner/MediTrackPlus/deploy.py", line 76, in check_service_dependencies
+
+2024-12-01 01:00:09,146 - INFO - [__main__] - Database: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 78, in check_service_dependencies
+
+2024-12-01 01:00:09,146 - INFO - [__main__] - File System: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 78, in check_service_dependencies
+
+2024-12-01 01:00:09,146 - INFO - [__main__] - Port Availability: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 78, in check_service_dependencies
+
+2024-12-01 01:00:09,146 - INFO - [__main__] - Environment: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 78, in check_service_dependencies
+
+2024-12-01 01:00:09,147 - INFO - [__main__] - === Executing: Checking environment variables ===
+File "/home/runner/MediTrackPlus/deploy.py", line 348, in main
+
+2024-12-01 01:00:09,147 - INFO - [__main__] - Started at: 01:00:09
+File "/home/runner/MediTrackPlus/deploy.py", line 349, in main
+
+2024-12-01 01:00:09,147 - INFO - [__main__] - All required environment variables are set
+File "/home/runner/MediTrackPlus/deploy.py", line 98, in check_environment_variables
+
+2024-12-01 01:00:09,147 - INFO - [__main__] - Completed at: 01:00:09
+File "/home/runner/MediTrackPlus/deploy.py", line 357, in main
+
+2024-12-01 01:00:09,147 - INFO - [__main__] - === Executing: Verifying database connection ===
+File "/home/runner/MediTrackPlus/deploy.py", line 348, in main
+
+2024-12-01 01:00:09,147 - INFO - [__main__] - Started at: 01:00:09
+File "/home/runner/MediTrackPlus/deploy.py", line 349, in main
+
+2024-12-01 01:00:09,147 - INFO - [__main__] - Verifying database connection...
+File "/home/runner/MediTrackPlus/deploy.py", line 104, in verify_database_connection
+
+2024-12-01 01:00:09,504 - INFO - [__main__] - Database connection successful
+File "/home/runner/MediTrackPlus/deploy.py", line 107, in verify_database_connection
+
+2024-12-01 01:00:09,505 - INFO - [__main__] - Completed at: 01:00:09
+File "/home/runner/MediTrackPlus/deploy.py", line 357, in main
+
+2024-12-01 01:00:09,505 - INFO - [__main__] - === Executing: Setting up database ===
+File "/home/runner/MediTrackPlus/deploy.py", line 348, in main
+
+2024-12-01 01:00:09,505 - INFO - [__main__] - Started at: 01:00:09
+File "/home/runner/MediTrackPlus/deploy.py", line 349, in main
+
+2024-12-01 01:00:09,505 - INFO - [__main__] - Setting up database...
+File "/home/runner/MediTrackPlus/deploy.py", line 116, in setup_database
+

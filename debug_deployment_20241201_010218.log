@@ -1,0 +1,135 @@
+2024-12-01 01:02:18,634 - INFO - [__main__] - === Starting Deployment Process ===
+File "/home/runner/MediTrackPlus/deploy.py", line 301, in main
+
+2024-12-01 01:02:18,634 - INFO - [__main__] - Deployment ID: 20241201_010218
+File "/home/runner/MediTrackPlus/deploy.py", line 302, in main
+
+2024-12-01 01:02:18,635 - INFO - [__main__] - Performing initial dependency check...
+File "/home/runner/MediTrackPlus/deploy.py", line 305, in main
+
+2024-12-01 01:02:18,635 - INFO - [__main__] - === Checking Service Dependencies ===
+File "/home/runner/MediTrackPlus/deploy.py", line 35, in check_service_dependencies
+
+2024-12-01 01:02:19,002 - INFO - [__main__] - Database connection: OK
+File "/home/runner/MediTrackPlus/deploy.py", line 49, in check_service_dependencies
+
+2024-12-01 01:02:19,003 - INFO - [__main__] - File system access: OK
+File "/home/runner/MediTrackPlus/deploy.py", line 60, in check_service_dependencies
+
+2024-12-01 01:02:19,003 - INFO - [__main__] - Port 3000 is available
+File "/home/runner/MediTrackPlus/deploy.py", line 194, in check_port_availability
+
+2024-12-01 01:02:19,003 - INFO - [__main__] - Environment variables: OK
+File "/home/runner/MediTrackPlus/deploy.py", line 72, in check_service_dependencies
+
+2024-12-01 01:02:19,003 - INFO - [__main__] - === Dependencies Status Summary ===
+File "/home/runner/MediTrackPlus/deploy.py", line 77, in check_service_dependencies
+
+2024-12-01 01:02:19,003 - INFO - [__main__] - Database: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 79, in check_service_dependencies
+
+2024-12-01 01:02:19,003 - INFO - [__main__] - File System: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 79, in check_service_dependencies
+
+2024-12-01 01:02:19,003 - INFO - [__main__] - Port Availability: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 79, in check_service_dependencies
+
+2024-12-01 01:02:19,004 - INFO - [__main__] - Environment: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 79, in check_service_dependencies
+
+2024-12-01 01:02:19,004 - INFO - [__main__] - === Executing: Checking environment variables ===
+File "/home/runner/MediTrackPlus/deploy.py", line 329, in main
+
+2024-12-01 01:02:19,004 - INFO - [__main__] - Started at: 01:02:19
+File "/home/runner/MediTrackPlus/deploy.py", line 330, in main
+
+2024-12-01 01:02:19,004 - INFO - [__main__] - All required environment variables are set
+File "/home/runner/MediTrackPlus/deploy.py", line 99, in check_environment_variables
+
+2024-12-01 01:02:19,005 - INFO - [__main__] - Completed at: 01:02:19
+File "/home/runner/MediTrackPlus/deploy.py", line 338, in main
+
+2024-12-01 01:02:19,005 - INFO - [__main__] - === Executing: Verifying database connection ===
+File "/home/runner/MediTrackPlus/deploy.py", line 329, in main
+
+2024-12-01 01:02:19,005 - INFO - [__main__] - Started at: 01:02:19
+File "/home/runner/MediTrackPlus/deploy.py", line 330, in main
+
+2024-12-01 01:02:19,005 - INFO - [__main__] - Verifying database connection...
+File "/home/runner/MediTrackPlus/deploy.py", line 105, in verify_database_connection
+
+2024-12-01 01:02:19,351 - INFO - [__main__] - Database connection successful
+File "/home/runner/MediTrackPlus/deploy.py", line 108, in verify_database_connection
+
+2024-12-01 01:02:19,351 - INFO - [__main__] - Completed at: 01:02:19
+File "/home/runner/MediTrackPlus/deploy.py", line 338, in main
+
+2024-12-01 01:02:19,351 - INFO - [__main__] - === Executing: Setting up database ===
+File "/home/runner/MediTrackPlus/deploy.py", line 329, in main
+
+2024-12-01 01:02:19,351 - INFO - [__main__] - Started at: 01:02:19
+File "/home/runner/MediTrackPlus/deploy.py", line 330, in main
+
+2024-12-01 01:02:19,351 - INFO - [__main__] - Setting up database...
+File "/home/runner/MediTrackPlus/deploy.py", line 117, in setup_database
+
+2024-12-01 01:02:20,690 - INFO - [__main__] - Acquired application context
+File "/home/runner/MediTrackPlus/deploy.py", line 122, in setup_database
+
+2024-12-01 01:02:20,690 - INFO - [__main__] - Database connection verified
+File "/home/runner/MediTrackPlus/deploy.py", line 127, in setup_database
+
+2024-12-01 01:02:21,085 - INFO - [__main__] - Database tables creation initiated
+File "/home/runner/MediTrackPlus/deploy.py", line 135, in setup_database
+
+2024-12-01 01:02:21,256 - INFO - [__main__] - Found tables: ['user', 'inventory_log', 'medication', 'consumption', 'prescription']
+File "/home/runner/MediTrackPlus/deploy.py", line 144, in setup_database
+
+2024-12-01 01:02:21,646 - INFO - [__main__] - Table prescription columns: ['id', 'medication_id', 'file_name', 'file_path', 'upload_date', 'expiry_date', 'notes']
+File "/home/runner/MediTrackPlus/deploy.py", line 158, in setup_database
+
+2024-12-01 01:02:21,858 - INFO - [__main__] - Table medication columns: ['id', 'name', 'dosage', 'frequency', 'current_stock', 'user_id', 'created_at', 'scheduled_time', 'max_daily_doses']
+File "/home/runner/MediTrackPlus/deploy.py", line 158, in setup_database
+
+2024-12-01 01:02:22,070 - INFO - [__main__] - Table consumption columns: ['id', 'medication_id', 'taken_at', 'quantity', 'scheduled_time', 'status']
+File "/home/runner/MediTrackPlus/deploy.py", line 158, in setup_database
+
+2024-12-01 01:02:22,282 - INFO - [__main__] - Table user columns: ['id', 'username', 'email', 'password_hash']
+File "/home/runner/MediTrackPlus/deploy.py", line 158, in setup_database
+
+2024-12-01 01:02:22,494 - INFO - [__main__] - Table inventory_log columns: ['id', 'medication_id', 'quantity_change', 'operation_type', 'timestamp']
+File "/home/runner/MediTrackPlus/deploy.py", line 158, in setup_database
+
+2024-12-01 01:02:22,495 - INFO - [__main__] - All required tables and structures verified
+File "/home/runner/MediTrackPlus/deploy.py", line 160, in setup_database
+
+2024-12-01 01:02:22,502 - INFO - [__main__] - Completed at: 01:02:22
+File "/home/runner/MediTrackPlus/deploy.py", line 338, in main
+
+2024-12-01 01:02:22,502 - INFO - [__main__] - === Executing: Creating upload directories ===
+File "/home/runner/MediTrackPlus/deploy.py", line 329, in main
+
+2024-12-01 01:02:22,502 - INFO - [__main__] - Started at: 01:02:22
+File "/home/runner/MediTrackPlus/deploy.py", line 330, in main
+
+2024-12-01 01:02:22,502 - INFO - [__main__] - Creating upload directories...
+File "/home/runner/MediTrackPlus/deploy.py", line 175, in create_upload_directories
+
+2024-12-01 01:02:22,503 - INFO - [__main__] - Created directory: static/uploads
+File "/home/runner/MediTrackPlus/deploy.py", line 182, in create_upload_directories
+
+2024-12-01 01:02:22,503 - INFO - [__main__] - Created directory: static/uploads/prescriptions
+File "/home/runner/MediTrackPlus/deploy.py", line 182, in create_upload_directories
+
+2024-12-01 01:02:22,503 - INFO - [__main__] - Completed at: 01:02:22
+File "/home/runner/MediTrackPlus/deploy.py", line 338, in main
+
+2024-12-01 01:02:22,503 - INFO - [__main__] - === Executing: Starting Flask application ===
+File "/home/runner/MediTrackPlus/deploy.py", line 329, in main
+
+2024-12-01 01:02:22,503 - INFO - [__main__] - Started at: 01:02:22
+File "/home/runner/MediTrackPlus/deploy.py", line 330, in main
+
+2024-12-01 01:02:22,503 - INFO - [__main__] - Starting Flask application...
+File "/home/runner/MediTrackPlus/deploy.py", line 203, in start_flask_application
+

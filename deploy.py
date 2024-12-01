@@ -1,6 +1,7 @@
 import os
 import sys
 import logging
+import subprocess
 from datetime import datetime
 from app import create_app, db
 import psycopg2
@@ -111,50 +112,60 @@ def verify_database_connection():
         return False
 
 def setup_database():
-    """Initialize the database with direct SQL verification"""
+    """Initialize the database with SQLAlchemy verification and detailed progress logging"""
     try:
         logger.info("Setting up database...")
-        from execute_sql_tool import execute_sql_tool
+        from sqlalchemy import inspect
         
-        # Test database connection with direct SQL
-        try:
-            logger.info("Testing database connection...")
-            result = execute_sql_tool("SELECT 1")
-            if result:
-                logger.info("Database connection test successful")
-            else:
-                logger.error("Database connection test failed")
-                return False
-        except Exception as e:
-            logger.error(f"Database connection test failed: {str(e)}")
-            return False
-
-        # Create application tables
-        try:
-            app = create_app()
-            with app.app_context():
-                db.create_all()
-                logger.info("Database tables created successfully")
-                
-                # Verify table creation
-                table_check = execute_sql_tool("""
-                    SELECT table_name 
-                    FROM information_schema.tables 
-                    WHERE table_schema = 'public'
-                """)
-                if table_check:
-                    logger.info(f"Verified tables: {[t[0] for t in table_check]}")
-                    return True
-                else:
-                    logger.error("No tables found after creation")
-                    return False
-        except Exception as e:
-            logger.error(f"Failed to create database tables: {str(e)}")
-            logger.error("Stack trace:", exc_info=True)
-            return False
+        app = create_app()
+        with app.app_context():
+            logger.info("Acquired application context")
             
+            # Test database connection
+            try:
+                db.engine.connect()
+                logger.info("Database connection verified")
+            except Exception as e:
+                logger.error(f"Database connection failed: {str(e)}")
+                return False
+            
+            # Create tables
+            try:
+                db.create_all()
+                logger.info("Database tables creation initiated")
+            except Exception as e:
+                logger.error(f"Failed to create tables: {str(e)}")
+                return False
+            
+            # Verify tables were created
+            try:
+                inspector = inspect(db.engine)
+                tables = inspector.get_table_names()
+                logger.info(f"Found tables: {tables}")
+                
+                # Check for required tables
+                required_tables = {'user', 'medication', 'consumption', 'inventory_log', 'prescription'}
+                existing_tables = set(tables)
+                
+                if not required_tables.issubset(existing_tables):
+                    missing = required_tables - existing_tables
+                    logger.error(f"Missing required tables: {missing}")
+                    return False
+                
+                # Verify table structures
+                for table in required_tables:
+                    columns = [c['name'] for c in inspector.get_columns(table)]
+                    logger.info(f"Table {table} columns: {columns}")
+                
+                logger.info("All required tables and structures verified")
+                return True
+            except Exception as e:
+                logger.error(f"Table verification failed: {str(e)}")
+                logger.error("Stack trace:", exc_info=True)
+                return False
+                
     except Exception as e:
-        logger.error(f"Unexpected error during database setup: {str(e)}")
+        logger.error(f"Critical error in database setup: {str(e)}")
         logger.error("Stack trace:", exc_info=True)
         return False
 
@@ -174,24 +185,6 @@ def create_upload_directories():
         logger.error("Error creating directories: %s", str(e))
         return False
 
-def update_run_configuration():
-    """Update the run configuration for the Flask application"""
-    try:
-        logger.info("Updating run configuration...")
-        with open('run.py', 'w') as f:
-            f.write('''from app import create_app
-
-app = create_app()
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=3000, debug=True)
-''')
-        logger.info("Run configuration updated successfully")
-        return True
-    except Exception as e:
-        logger.error("Error updating run configuration: %s", str(e))
-        return False
-
 def check_port_availability(port):
     """Check if the specified port is available"""
     import socket
@@ -205,19 +198,34 @@ def check_port_availability(port):
         return False
 
 def start_flask_application():
-    """Start the Flask application using Replit workflow"""
+    """Start the Flask application using subprocess"""
     try:
         logger.info("Starting Flask application...")
-        from workflows_set_run_config_tool import workflows_set_run_config_tool
-        workflows_set_run_config_tool(
-            name="Flask App",
-            command="python run.py",
-            wait_for_port=3000
+        
+        # Start the Flask application using subprocess
+        flask_process = subprocess.Popen(
+            ["python", "run.py"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            universal_newlines=True
         )
-        logger.info("Flask application startup initiated")
-        return True
+        
+        # Give the process a moment to start
+        sleep(2)
+        
+        # Check if process is running
+        if flask_process.poll() is None:
+            logger.info("Flask application started successfully")
+            return True
+        else:
+            stdout, stderr = flask_process.communicate()
+            logger.error("Flask application failed to start")
+            logger.error(f"stdout: {stdout}")
+            logger.error(f"stderr: {stderr}")
+            return False
+            
     except Exception as e:
-        logger.error(f"Failed to start Flask application: {str(e)}")
+        logger.error(f"Critical error in Flask application startup: {str(e)}")
         logger.error("Stack trace:", exc_info=True)
         return False
 
@@ -279,26 +287,6 @@ def verify_application_running():
             else:
                 logger.error("Max retry attempts reached")
         
-        # Recovery attempt for common issues
-        logger.info("Attempting recovery procedures...")
-        try:
-            # Check if port is available
-            if not check_port_availability(3000):
-                logger.info("Attempting to free up port 3000...")
-                import psutil
-                for proc in psutil.process_iter(['pid', 'name', 'connections']):
-                    try:
-                        for conn in proc.connections():
-                            if conn.laddr.port == 3000:
-                                logger.info(f"Found process using port 3000: {proc.info['name']} (PID: {proc.info['pid']})")
-                                # Don't forcefully terminate, just log
-                                break
-                    except (psutil.NoSuchProcess, psutil.AccessDenied):
-                        continue
-        except Exception as e:
-            logger.error(f"Recovery attempt failed: {str(e)}")
-            logger.error("Recovery error details:", exc_info=True)
-        
         logger.error("=== Application Verification Failed ===")
         return False
         
@@ -309,8 +297,9 @@ def verify_application_running():
 
 def main():
     """Main deployment function with enhanced error handling and recovery"""
+    deployment_id = datetime.now().strftime('%Y%m%d_%H%M%S')
     logger.info("=== Starting Deployment Process ===")
-    logger.info(f"Deployment ID: {datetime.now().strftime('%Y%m%d_%H%M%S')}")
+    logger.info(f"Deployment ID: {deployment_id}")
     
     # Initial dependency check
     logger.info("Performing initial dependency check...")
@@ -328,7 +317,6 @@ def main():
         ("Verifying database connection", verify_database_connection),
         ("Setting up database", setup_database),
         ("Creating upload directories", create_upload_directories),
-        ("Updating run configuration", update_run_configuration),
         ("Starting Flask application", start_flask_application),
         ("Verifying application status", verify_application_running)
     ]
@@ -361,8 +349,8 @@ def main():
         logger.info("Stage Summary:")
         for step in steps:
             logger.info(f"✓ {step[0]}")
-        logger.info("\nThe application is ready to run on Replit!")
-        logger.info("Access it through the provided URL in your Replit workspace.")
+        logger.info("\nThe application is ready to run!")
+        logger.info("Access it at http://localhost:3000")
         return True
     else:
         logger.error("=== Deployment Failed ===")

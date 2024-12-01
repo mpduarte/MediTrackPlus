@@ -9,3 +9,4 @@ python-dotenv==1.0.0
 Pillow==10.1.0
 email-validator==2.1.0.post1
 requests
+replit

@@ -137,7 +137,7 @@ medtracker/
 
 ## Deployment
 
-This application is designed to be deployed on Replit:
+The application is designed to be deployed on Replit:
 
 1. Create a new Repl
 2. Import the project
