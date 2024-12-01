@@ -1,0 +1,172 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Consumption Reports</h5>
+            </div>
+            <div class="card-body">
+                <form method="GET" class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <label class="form-label">Date Range</label>
+                        <select name="date_range" class="form-select">
+                            <option value="7" {% if date_range == '7' %}selected{% endif %}>Last 7 Days</option>
+                            <option value="30" {% if date_range == '30' %}selected{% endif %}>Last 30 Days</option>
+                            <option value="90" {% if date_range == '90' %}selected{% endif %}>Last 90 Days</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Medication</label>
+                        <select name="medication_id" class="form-select">
+                            <option value="">All Medications</option>
+                            {% for med in medications %}
+                            <option value="{{ med.id }}" {% if medication_id == med.id %}selected{% endif %}>{{ med.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary">Generate Report</button>
+                    </div>
+                </form>
+
+                <!-- Summary Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6 class="card-title">Total Consumption</h6>
+                                <h3>{{ total_consumption }}</h3>
+                                <small class="text-muted">doses taken</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6 class="card-title">Adherence Rate</h6>
+                                <h3>{{ "%.1f"|format(adherence_rate) }}%</h3>
+                                <small class="text-muted">doses taken as scheduled</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6 class="card-title">Most Consumed</h6>
+                                <h3>{{ most_consumed_med }}</h3>
+                                <small class="text-muted">medication</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title">Daily Consumption Trend</h6>
+                                <canvas id="consumptionTrendChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title">Consumption by Status</h6>
+                                <canvas id="consumptionStatusChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Records -->
+                <div class="table-responsive mt-4">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Medication</th>
+                                <th>Quantity</th>
+                                <th>Status</th>
+                                <th>Scheduled Time</th>
+                                <th>Taken At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in consumption_records %}
+                            <tr>
+                                <td>{{ record.taken_at.strftime('%Y-%m-%d') }}</td>
+                                <td>{{ record.medication.name }}</td>
+                                <td>{{ record.quantity }}</td>
+                                <td>
+                                    <span class="badge {% if record.status == 'taken' %}bg-success{% elif record.status == 'missed' %}bg-danger{% else %}bg-warning{% endif %}">
+                                        {{ record.status }}
+                                    </span>
+                                </td>
+                                <td>{{ record.scheduled_time or 'N/A' }}</td>
+                                <td>{{ record.taken_at.strftime('%H:%M') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart Initialization -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Consumption Trend Chart
+    const trendCtx = document.getElementById('consumptionTrendChart').getContext('2d');
+    new Chart(trendCtx, {
+        type: 'line',
+        data: {
+            labels: {{ dates|tojson|safe }},
+            datasets: [{
+                label: 'Daily Doses',
+                data: {{ daily_doses|tojson|safe }},
+                borderColor: '#2C7BB8',
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            }
+        }
+    });
+
+    // Consumption Status Chart
+    const statusCtx = document.getElementById('consumptionStatusChart').getContext('2d');
+    new Chart(statusCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Taken', 'Missed', 'Skipped'],
+            datasets: [{
+                data: {{ status_distribution|tojson|safe }},
+                backgroundColor: ['#7CCFB6', '#dc3545', '#ffc107']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

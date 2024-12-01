@@ -201,3 +201,87 @@ def upload_prescription(med_id):
 def history():
     medications = Medication.query.filter_by(user_id=current_user.id).all()
     return render_template('history.html', medications=medications)
+
+
+@main_bp.route('/reports')
+@login_required
+def reports():
+    from datetime import datetime, timedelta
+    from sqlalchemy import func
+    
+    # Get filter parameters
+    date_range = request.args.get('date_range', '7')
+    medication_id = request.args.get('medication_id', '')
+    
+    # Calculate date range
+    end_date = datetime.utcnow()
+    start_date = end_date - timedelta(days=int(date_range))
+    
+    # Base query for consumption records
+    query = db.session.query(Consumption).join(Medication).\
+        filter(Medication.user_id == current_user.id).\
+        filter(Consumption.taken_at >= start_date)
+    
+    if medication_id:
+        query = query.filter(Medication.id == medication_id)
+    
+    # Get consumption records
+    consumption_records = query.order_by(Consumption.taken_at.desc()).all()
+    
+    # Calculate summary statistics
+    total_consumption = sum(record.quantity for record in consumption_records)
+    
+    # Calculate adherence rate
+    adherence_rate = 0
+    if consumption_records:
+        taken_count = len([r for r in consumption_records if r.status == 'taken'])
+        adherence_rate = (taken_count / len(consumption_records)) * 100
+    
+    # Get most consumed medication
+    med_consumption = {}
+    for record in consumption_records:
+        med_name = record.medication.name
+        med_consumption[med_name] = med_consumption.get(med_name, 0) + record.quantity
+    
+    most_consumed_med = max(med_consumption.items(), key=lambda x: x[1])[0] if med_consumption else 'N/A'
+    
+    # Prepare data for trend chart
+    dates = []
+    daily_doses = []
+    current_date = start_date
+    while current_date <= end_date:
+        dates.append(current_date.strftime('%Y-%m-%d'))
+        day_doses = sum(
+            record.quantity
+            for record in consumption_records
+            if record.taken_at.date() == current_date.date()
+        )
+        daily_doses.append(day_doses)
+        current_date += timedelta(days=1)
+    
+    # Calculate status distribution
+    status_counts = {'taken': 0, 'missed': 0, 'skipped': 0}
+    for record in consumption_records:
+        status_counts[record.status] = status_counts.get(record.status, 0) + 1
+    status_distribution = [
+        status_counts.get('taken', 0),
+        status_counts.get('missed', 0),
+        status_counts.get('skipped', 0)
+    ]
+    
+    # Get all medications for the filter dropdown
+    medications = Medication.query.filter_by(user_id=current_user.id).all()
+    
+    return render_template(
+        'reports.html',
+        medications=medications,
+        consumption_records=consumption_records,
+        total_consumption=total_consumption,
+        adherence_rate=adherence_rate,
+        most_consumed_med=most_consumed_med,
+        dates=dates,
+        daily_doses=daily_doses,
+        status_distribution=status_distribution,
+        date_range=date_range,
+        medication_id=medication_id
+    )
