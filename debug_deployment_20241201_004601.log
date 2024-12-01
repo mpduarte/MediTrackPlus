@@ -1,0 +1,78 @@
+2024-12-01 00:46:01,166 - INFO - [__main__] - === Starting Deployment Process ===
+File "/home/runner/MediTrackPlus/deploy.py", line 276, in main
+
+2024-12-01 00:46:01,166 - INFO - [__main__] - Deployment ID: 20241201_004601
+File "/home/runner/MediTrackPlus/deploy.py", line 277, in main
+
+2024-12-01 00:46:01,166 - INFO - [__main__] - Performing initial dependency check...
+File "/home/runner/MediTrackPlus/deploy.py", line 280, in main
+
+2024-12-01 00:46:01,166 - INFO - [__main__] - === Checking Service Dependencies ===
+File "/home/runner/MediTrackPlus/deploy.py", line 34, in check_service_dependencies
+
+2024-12-01 00:46:01,513 - INFO - [__main__] - Database connection: OK
+File "/home/runner/MediTrackPlus/deploy.py", line 48, in check_service_dependencies
+
+2024-12-01 00:46:01,513 - INFO - [__main__] - File system access: OK
+File "/home/runner/MediTrackPlus/deploy.py", line 59, in check_service_dependencies
+
+2024-12-01 00:46:01,513 - ERROR - [__main__] - Port 3000 is already in use: [Errno 98] Address already in use
+File "/home/runner/MediTrackPlus/deploy.py", line 185, in check_port_availability
+
+2024-12-01 00:46:01,513 - INFO - [__main__] - Environment variables: OK
+File "/home/runner/MediTrackPlus/deploy.py", line 71, in check_service_dependencies
+
+2024-12-01 00:46:01,514 - INFO - [__main__] - === Dependencies Status Summary ===
+File "/home/runner/MediTrackPlus/deploy.py", line 76, in check_service_dependencies
+
+2024-12-01 00:46:01,514 - INFO - [__main__] - Database: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 78, in check_service_dependencies
+
+2024-12-01 00:46:01,514 - INFO - [__main__] - File System: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 78, in check_service_dependencies
+
+2024-12-01 00:46:01,514 - INFO - [__main__] - Port Availability: ✗
+File "/home/runner/MediTrackPlus/deploy.py", line 78, in check_service_dependencies
+
+2024-12-01 00:46:01,514 - INFO - [__main__] - Environment: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 78, in check_service_dependencies
+
+2024-12-01 00:46:01,514 - ERROR - [__main__] - Critical dependencies not met. Attempting recovery...
+File "/home/runner/MediTrackPlus/deploy.py", line 282, in main
+
+2024-12-01 00:46:06,514 - INFO - [__main__] - === Checking Service Dependencies ===
+File "/home/runner/MediTrackPlus/deploy.py", line 34, in check_service_dependencies
+
+2024-12-01 00:46:06,884 - INFO - [__main__] - Database connection: OK
+File "/home/runner/MediTrackPlus/deploy.py", line 48, in check_service_dependencies
+
+2024-12-01 00:46:06,885 - INFO - [__main__] - File system access: OK
+File "/home/runner/MediTrackPlus/deploy.py", line 59, in check_service_dependencies
+
+2024-12-01 00:46:06,885 - ERROR - [__main__] - Port 3000 is already in use: [Errno 98] Address already in use
+File "/home/runner/MediTrackPlus/deploy.py", line 185, in check_port_availability
+
+2024-12-01 00:46:06,885 - INFO - [__main__] - Environment variables: OK
+File "/home/runner/MediTrackPlus/deploy.py", line 71, in check_service_dependencies
+
+2024-12-01 00:46:06,886 - INFO - [__main__] - === Dependencies Status Summary ===
+File "/home/runner/MediTrackPlus/deploy.py", line 76, in check_service_dependencies
+
+2024-12-01 00:46:06,886 - INFO - [__main__] - Database: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 78, in check_service_dependencies
+
+2024-12-01 00:46:06,886 - INFO - [__main__] - File System: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 78, in check_service_dependencies
+
+2024-12-01 00:46:06,886 - INFO - [__main__] - Port Availability: ✗
+File "/home/runner/MediTrackPlus/deploy.py", line 78, in check_service_dependencies
+
+2024-12-01 00:46:06,886 - INFO - [__main__] - Environment: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 78, in check_service_dependencies
+
+2024-12-01 00:46:06,886 - ERROR - [__main__] - Dependencies check failed after recovery attempt
+File "/home/runner/MediTrackPlus/deploy.py", line 286, in main
+
+2024-12-01 00:46:06,886 - ERROR - [__main__] - === Deployment Failed ===
+File "/home/runner/MediTrackPlus/deploy.py", line 287, in main
+

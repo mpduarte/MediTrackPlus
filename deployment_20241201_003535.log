@@ -1,0 +1,19 @@
+2024-12-01 00:35:35,126 - INFO - Starting deployment process...
+2024-12-01 00:35:35,126 - INFO - === Checking environment variables ===
+2024-12-01 00:35:35,127 - INFO - All required environment variables are set
+2024-12-01 00:35:35,127 - INFO - === Verifying database connection ===
+2024-12-01 00:35:35,127 - INFO - Verifying database connection...
+2024-12-01 00:35:35,473 - INFO - Database connection successful
+2024-12-01 00:35:35,473 - INFO - === Setting up database ===
+2024-12-01 00:35:35,473 - INFO - Setting up database...
+2024-12-01 00:35:37,209 - INFO - Database setup completed successfully
+2024-12-01 00:35:37,209 - INFO - === Creating upload directories ===
+2024-12-01 00:35:37,210 - INFO - Creating upload directories...
+2024-12-01 00:35:37,210 - INFO - Created directory: static/uploads
+2024-12-01 00:35:37,210 - INFO - Created directory: static/uploads/prescriptions
+2024-12-01 00:35:37,210 - INFO - === Updating run configuration ===
+2024-12-01 00:35:37,210 - INFO - Updating run configuration...
+2024-12-01 00:35:37,210 - INFO - Run configuration updated successfully
+2024-12-01 00:35:37,210 - INFO - === Deployment completed successfully ===
+2024-12-01 00:35:37,210 - INFO - The application is ready to run on Replit!
+2024-12-01 00:35:37,210 - INFO - Access it through the provided URL in your Replit workspace.

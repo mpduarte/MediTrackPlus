@@ -41,6 +41,11 @@ def create_app():
         from models import User
         return User.query.get(int(id))
     
+    # Health check endpoint
+    @app.route('/health')
+    def health_check():
+        return {"status": "healthy", "timestamp": datetime.now().isoformat()}, 200
+
     # Error handlers
     @app.errorhandler(404)
     def not_found_error(error):

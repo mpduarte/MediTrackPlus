@@ -1,0 +1,100 @@
+2024-12-01 00:47:37,197 - INFO - [__main__] - === Starting Deployment Process ===
+File "/home/runner/MediTrackPlus/deploy.py", line 312, in main
+
+2024-12-01 00:47:37,197 - INFO - [__main__] - Deployment ID: 20241201_004737
+File "/home/runner/MediTrackPlus/deploy.py", line 313, in main
+
+2024-12-01 00:47:37,197 - INFO - [__main__] - Performing initial dependency check...
+File "/home/runner/MediTrackPlus/deploy.py", line 316, in main
+
+2024-12-01 00:47:37,197 - INFO - [__main__] - === Checking Service Dependencies ===
+File "/home/runner/MediTrackPlus/deploy.py", line 34, in check_service_dependencies
+
+2024-12-01 00:47:37,541 - INFO - [__main__] - Database connection: OK
+File "/home/runner/MediTrackPlus/deploy.py", line 48, in check_service_dependencies
+
+2024-12-01 00:47:37,541 - INFO - [__main__] - File system access: OK
+File "/home/runner/MediTrackPlus/deploy.py", line 59, in check_service_dependencies
+
+2024-12-01 00:47:37,542 - INFO - [__main__] - Port 3000 is available
+File "/home/runner/MediTrackPlus/deploy.py", line 201, in check_port_availability
+
+2024-12-01 00:47:37,542 - INFO - [__main__] - Environment variables: OK
+File "/home/runner/MediTrackPlus/deploy.py", line 71, in check_service_dependencies
+
+2024-12-01 00:47:37,542 - INFO - [__main__] - === Dependencies Status Summary ===
+File "/home/runner/MediTrackPlus/deploy.py", line 76, in check_service_dependencies
+
+2024-12-01 00:47:37,542 - INFO - [__main__] - Database: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 78, in check_service_dependencies
+
+2024-12-01 00:47:37,542 - INFO - [__main__] - File System: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 78, in check_service_dependencies
+
+2024-12-01 00:47:37,542 - INFO - [__main__] - Port Availability: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 78, in check_service_dependencies
+
+2024-12-01 00:47:37,542 - INFO - [__main__] - Environment: ✓
+File "/home/runner/MediTrackPlus/deploy.py", line 78, in check_service_dependencies
+
+2024-12-01 00:47:37,543 - INFO - [__main__] - === Executing: Checking environment variables ===
+File "/home/runner/MediTrackPlus/deploy.py", line 341, in main
+
+2024-12-01 00:47:37,543 - INFO - [__main__] - Started at: 00:47:37
+File "/home/runner/MediTrackPlus/deploy.py", line 342, in main
+
+2024-12-01 00:47:37,543 - INFO - [__main__] - All required environment variables are set
+File "/home/runner/MediTrackPlus/deploy.py", line 98, in check_environment_variables
+
+2024-12-01 00:47:37,543 - INFO - [__main__] - Completed at: 00:47:37
+File "/home/runner/MediTrackPlus/deploy.py", line 350, in main
+
+2024-12-01 00:47:37,543 - INFO - [__main__] - === Executing: Verifying database connection ===
+File "/home/runner/MediTrackPlus/deploy.py", line 341, in main
+
+2024-12-01 00:47:37,543 - INFO - [__main__] - Started at: 00:47:37
+File "/home/runner/MediTrackPlus/deploy.py", line 342, in main
+
+2024-12-01 00:47:37,544 - INFO - [__main__] - Verifying database connection...
+File "/home/runner/MediTrackPlus/deploy.py", line 104, in verify_database_connection
+
+2024-12-01 00:47:37,888 - INFO - [__main__] - Database connection successful
+File "/home/runner/MediTrackPlus/deploy.py", line 107, in verify_database_connection
+
+2024-12-01 00:47:37,888 - INFO - [__main__] - Completed at: 00:47:37
+File "/home/runner/MediTrackPlus/deploy.py", line 350, in main
+
+2024-12-01 00:47:37,888 - INFO - [__main__] - === Executing: Setting up database ===
+File "/home/runner/MediTrackPlus/deploy.py", line 341, in main
+
+2024-12-01 00:47:37,889 - INFO - [__main__] - Started at: 00:47:37
+File "/home/runner/MediTrackPlus/deploy.py", line 342, in main
+
+2024-12-01 00:47:37,889 - INFO - [__main__] - Setting up database...
+File "/home/runner/MediTrackPlus/deploy.py", line 116, in setup_database
+
+2024-12-01 00:47:37,889 - ERROR - [__main__] - Unexpected error during database setup: No module named 'execute_sql_tool'
+File "/home/runner/MediTrackPlus/deploy.py", line 157, in setup_database
+
+2024-12-01 00:47:37,889 - ERROR - [__main__] - Stack trace:
+File "/home/runner/MediTrackPlus/deploy.py", line 158, in setup_database
+Traceback (most recent call last):
+  File "/home/runner/MediTrackPlus/deploy.py", line 117, in setup_database
+    from execute_sql_tool import execute_sql_tool
+ModuleNotFoundError: No module named 'execute_sql_tool'
+2024-12-01 00:47:37,890 - ERROR - [__main__] - Step failed: Setting up database
+File "/home/runner/MediTrackPlus/deploy.py", line 345, in main
+
+2024-12-01 00:47:37,890 - ERROR - [__main__] - === Deployment Failed ===
+File "/home/runner/MediTrackPlus/deploy.py", line 368, in main
+
+2024-12-01 00:47:37,890 - ERROR - [__main__] - Failed Steps:
+File "/home/runner/MediTrackPlus/deploy.py", line 369, in main
+
+2024-12-01 00:47:37,890 - ERROR - [__main__] - ✗ Setting up database
+File "/home/runner/MediTrackPlus/deploy.py", line 371, in main
+
+2024-12-01 00:47:37,890 - ERROR - [__main__] - 
+Please check the detailed logs in debug_20241201_004737.log
+File "/home/runner/MediTrackPlus/deploy.py", line 372, in main
+

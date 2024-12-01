@@ -1,0 +1,25 @@
+2024-12-01 00:46:47,463 - INFO - [__main__] - === Starting Deployment Process ===
+2024-12-01 00:46:47,464 - INFO - [__main__] - Deployment ID: 20241201_004647
+2024-12-01 00:46:47,464 - INFO - [__main__] - Performing initial dependency check...
+2024-12-01 00:46:47,464 - INFO - [__main__] - === Checking Service Dependencies ===
+2024-12-01 00:46:47,810 - INFO - [__main__] - Database connection: OK
+2024-12-01 00:46:47,810 - INFO - [__main__] - File system access: OK
+2024-12-01 00:46:47,810 - INFO - [__main__] - Port 3000 is available
+2024-12-01 00:46:47,811 - INFO - [__main__] - Environment variables: OK
+2024-12-01 00:46:47,811 - INFO - [__main__] - === Dependencies Status Summary ===
+2024-12-01 00:46:47,811 - INFO - [__main__] - Database: ✓
+2024-12-01 00:46:47,811 - INFO - [__main__] - File System: ✓
+2024-12-01 00:46:47,811 - INFO - [__main__] - Port Availability: ✓
+2024-12-01 00:46:47,811 - INFO - [__main__] - Environment: ✓
+2024-12-01 00:46:47,811 - INFO - [__main__] - === Executing: Checking environment variables ===
+2024-12-01 00:46:47,812 - INFO - [__main__] - Started at: 00:46:47
+2024-12-01 00:46:47,812 - INFO - [__main__] - All required environment variables are set
+2024-12-01 00:46:47,812 - INFO - [__main__] - Completed at: 00:46:47
+2024-12-01 00:46:47,812 - INFO - [__main__] - === Executing: Verifying database connection ===
+2024-12-01 00:46:47,812 - INFO - [__main__] - Started at: 00:46:47
+2024-12-01 00:46:47,812 - INFO - [__main__] - Verifying database connection...
+2024-12-01 00:46:48,163 - INFO - [__main__] - Database connection successful
+2024-12-01 00:46:48,163 - INFO - [__main__] - Completed at: 00:46:48
+2024-12-01 00:46:48,163 - INFO - [__main__] - === Executing: Setting up database ===
+2024-12-01 00:46:48,163 - INFO - [__main__] - Started at: 00:46:48
+2024-12-01 00:46:48,163 - INFO - [__main__] - Setting up database...

@@ -1,0 +1,26 @@
+2024-12-01 00:46:01,166 - INFO - [__main__] - === Starting Deployment Process ===
+2024-12-01 00:46:01,166 - INFO - [__main__] - Deployment ID: 20241201_004601
+2024-12-01 00:46:01,166 - INFO - [__main__] - Performing initial dependency check...
+2024-12-01 00:46:01,166 - INFO - [__main__] - === Checking Service Dependencies ===
+2024-12-01 00:46:01,513 - INFO - [__main__] - Database connection: OK
+2024-12-01 00:46:01,513 - INFO - [__main__] - File system access: OK
+2024-12-01 00:46:01,513 - ERROR - [__main__] - Port 3000 is already in use: [Errno 98] Address already in use
+2024-12-01 00:46:01,513 - INFO - [__main__] - Environment variables: OK
+2024-12-01 00:46:01,514 - INFO - [__main__] - === Dependencies Status Summary ===
+2024-12-01 00:46:01,514 - INFO - [__main__] - Database: ✓
+2024-12-01 00:46:01,514 - INFO - [__main__] - File System: ✓
+2024-12-01 00:46:01,514 - INFO - [__main__] - Port Availability: ✗
+2024-12-01 00:46:01,514 - INFO - [__main__] - Environment: ✓
+2024-12-01 00:46:01,514 - ERROR - [__main__] - Critical dependencies not met. Attempting recovery...
+2024-12-01 00:46:06,514 - INFO - [__main__] - === Checking Service Dependencies ===
+2024-12-01 00:46:06,884 - INFO - [__main__] - Database connection: OK
+2024-12-01 00:46:06,885 - INFO - [__main__] - File system access: OK
+2024-12-01 00:46:06,885 - ERROR - [__main__] - Port 3000 is already in use: [Errno 98] Address already in use
+2024-12-01 00:46:06,885 - INFO - [__main__] - Environment variables: OK
+2024-12-01 00:46:06,886 - INFO - [__main__] - === Dependencies Status Summary ===
+2024-12-01 00:46:06,886 - INFO - [__main__] - Database: ✓
+2024-12-01 00:46:06,886 - INFO - [__main__] - File System: ✓
+2024-12-01 00:46:06,886 - INFO - [__main__] - Port Availability: ✗
+2024-12-01 00:46:06,886 - INFO - [__main__] - Environment: ✓
+2024-12-01 00:46:06,886 - ERROR - [__main__] - Dependencies check failed after recovery attempt
+2024-12-01 00:46:06,886 - ERROR - [__main__] - === Deployment Failed ===
