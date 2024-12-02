@@ -50,7 +50,7 @@ args = "python deploy.py"
 
 [deployment]
 run = ["sh", "-c", "python3 run.py"]
+deploymentTarget = "cloudrun"
 
 [[ports]]
 localPort = 4200
-externalPort = 4200
