@@ -135,15 +135,42 @@ medtracker/
    - View consumption trends
    - Export data as needed
 
-## Deployment
+## Deployment and Infrastructure
 
-The application is designed to be deployed on Replit:
+### Automated Deployment Process
+- Comprehensive deployment pipeline with health checks
+- Automated database initialization and verification
+- SSL certificate generation and configuration
+- Environment validation and configuration
+- Upload directory structure creation
+- Automatic service dependency verification
 
+### Infrastructure Features
+- Health monitoring system with detailed status reporting
+- Connection pool management for database optimization
+- Automatic recovery mechanisms for failed deployments
+- Detailed logging system with debug capabilities
+- Port availability checking and management
+
+### Deployment Steps
 1. Create a new Repl
 2. Import the project
-3. Set up environment variables in Replit Secrets
-4. Install dependencies using the package manager
-5. Use the run button to start the application
+3. Set up environment variables in Replit Secrets:
+   - `DATABASE_URL`: PostgreSQL connection string
+   - `FLASK_SECRET_KEY`: Application secret key
+4. The deployment script will automatically:
+   - Install dependencies
+   - Set up SSL certificates
+   - Initialize the database
+   - Create necessary directories
+   - Start the application with health checks
+
+### Health Monitoring
+- Real-time application health monitoring
+- Database connection status verification
+- SSL certificate validation
+- Resource availability checking
+- Detailed error reporting and logging
 
 ## Contributing
 
@@ -159,11 +186,29 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Security
 
+### Authentication and Data Protection
 - All passwords are hashed using secure methods
 - File uploads are validated and sanitized
 - SQL injection protection through SQLAlchemy
 - CSRF protection on all forms
 - Secure session management
+
+### Database Security
+- SSL-enforced database connections with certificate verification
+- Connection pooling with automatic health checks
+- Keepalive settings for connection stability
+- Statement timeout limits for query protection
+- Automated SSL certificate generation and management
+
+### Infrastructure Security
+- Environment variable validation and protection
+- Secure file system permissions management
+- Automated security configuration validation
+- Protected upload directories with access control
+- Detailed error logging with debug capabilities
+- Automatic service dependency verification
+- Enhanced error recovery mechanisms
+- Comprehensive system health monitoring
 
 ## Support
 
