@@ -350,6 +350,55 @@ This project is licensed under the MIT License - see the LICENSE file for detail
   }
   ```
 
+## System Requirements
+
+### Hardware Requirements
+- Minimum 1GB RAM
+- 1GB free disk space
+- Basic CPU (1+ cores)
+- Network connectivity
+
+### Software Requirements
+- Python 3.11 or higher
+- PostgreSQL 12 or higher
+- Modern web browser (Chrome, Firefox, Safari, Edge)
+- SSL certificates for secure database connection
+
+### Operating System Compatibility
+- Linux (Ubuntu 20.04+, Debian 10+)
+- macOS 10.15+
+- Windows 10/11 with WSL2
+
+### Database Requirements
+- PostgreSQL 12+ with SSL support
+- Minimum 100MB initial database storage
+- Connection pool support
+- SSL/TLS capability for secure connections
+
+### Network Requirements
+- Outbound internet access for package installation
+- Open port for web application (default: 4200)
+- HTTPS support for production deployment
+- Stable internet connection for API calls
+
+### Storage Requirements
+- 100MB for application code
+- 500MB for prescription file uploads
+- 100MB for logs and temporary files
+- 100MB for SSL certificates and security files
+
+### Development Environment
+- Git for version control
+- Python package manager (pip)
+- Text editor or IDE
+- Terminal access
+
+### Additional Considerations
+- Regular backup capability
+- Monitoring system access
+- Logging system access
+- Secure file system permissions
+
 ## Support
 
 For support, please open an issue in the repository or contact the maintainers.
