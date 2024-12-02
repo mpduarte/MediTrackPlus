@@ -210,6 +210,146 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Enhanced error recovery mechanisms
 - Comprehensive system health monitoring
 
+## API Documentation
+
+### Authentication Endpoints
+
+#### Register User
+- **URL**: `/auth/register`
+- **Method**: `POST`
+- **Parameters**:
+  - `username` (required): User's username
+  - `email` (required): User's email address
+  - `password` (required): User's password
+  - `confirm_password` (required): Password confirmation
+- **Response**:
+  - Success: Redirects to login page
+  - Error: Returns form with validation errors
+
+#### Login
+- **URL**: `/auth/login`
+- **Method**: `POST`
+- **Parameters**:
+  - `email` (required): User's email address
+  - `password` (required): User's password
+- **Response**:
+  - Success: Redirects to dashboard
+  - Error: Returns form with validation errors
+
+### Medication Management
+
+#### Get Dashboard
+- **URL**: `/dashboard`
+- **Method**: `GET`
+- **Authentication**: Required
+- **Response**: Dashboard page with medication list and consumption form
+
+#### Get Inventory
+- **URL**: `/inventory`
+- **Method**: `GET`
+- **Authentication**: Required
+- **Response**: Inventory page with medication list and forms
+
+#### Add Medication
+- **URL**: `/inventory`
+- **Method**: `POST`
+- **Authentication**: Required
+- **Parameters**:
+  - `name` (required): Medication name
+  - `dosage` (required): Dosage amount
+  - `frequency`: Frequency of doses
+  - `current_stock` (required): Initial stock quantity
+  - `scheduled_time`: Scheduled administration time
+  - `max_daily_doses`: Maximum doses per day
+- **Response**:
+  - Success: Redirects to inventory page
+  - Error: Returns form with validation errors
+
+#### Update Stock
+- **URL**: `/update_stock/<med_id>`
+- **Method**: `POST`
+- **Authentication**: Required
+- **Parameters**:
+  - `quantity` (required): Stock quantity change (positive or negative)
+- **Response**:
+  - Success: Redirects to inventory page
+  - Error: Returns error message
+
+#### Delete Medication
+- **URL**: `/medication/<med_id>/delete`
+- **Method**: `POST`
+- **Authentication**: Required
+- **Response**:
+  - Success: Redirects to inventory page
+  - Error: Returns error message
+
+### Consumption Tracking
+
+#### Log Consumption
+- **URL**: `/log_consumption/<med_id>`
+- **Method**: `POST`
+- **Authentication**: Required
+- **Parameters**:
+  - `quantity` (required): Amount consumed
+- **Response**:
+  - Success: Redirects to dashboard
+  - Error: Returns error message
+
+#### View History
+- **URL**: `/history`
+- **Method**: `GET`
+- **Authentication**: Required
+- **Response**: History page with consumption records
+
+### Prescription Management
+
+#### Upload Prescription
+- **URL**: `/upload_prescription/<med_id>`
+- **Method**: `POST`
+- **Authentication**: Required
+- **Parameters**:
+  - `prescription_file` (required): PDF or image file
+  - `expiry_date`: Prescription expiry date
+  - `notes`: Additional notes
+- **Response**:
+  - Success: Redirects to inventory page
+  - Error: Returns form with validation errors
+
+### Reports and Analytics
+
+#### Generate Reports
+- **URL**: `/reports`
+- **Method**: `GET`
+- **Authentication**: Required
+- **Query Parameters**:
+  - `date_range`: Number of days (7, 30, or 90)
+  - `medication_id`: Specific medication ID
+- **Response**: Reports page with consumption analytics
+
+### System Health
+
+#### Health Check
+- **URL**: `/health`
+- **Method**: `GET`
+- **Response**:
+  ```json
+  {
+    "status": "healthy",
+    "timestamp": "ISO-8601 timestamp",
+    "database": {
+      "connected": true,
+      "ssl_mode": "verify-full",
+      "ssl_in_use": true,
+      "server_version": "PostgreSQL version",
+      "connection_pool": {
+        "size": 5,
+        "timeout": 30,
+        "max_overflow": 10
+      }
+    }
+  }
+  ```
+
 ## Support
 
 For support, please open an issue in the repository or contact the maintainers.
