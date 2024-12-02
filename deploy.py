@@ -43,7 +43,19 @@ def check_service_dependencies():
     try:
         # Check Database
         try:
-            conn = psycopg2.connect(os.environ['DATABASE_URL'])
+            conn_params = {
+                'sslmode': 'verify-full',
+                'sslcert': None,
+                'sslkey': None,
+                'sslrootcert': '/etc/ssl/certs/ca-certificates.crt',
+                'application_name': 'MedTracker',
+                'options': '-c statement_timeout=5000',
+                'keepalives': 1,
+                'keepalives_idle': 30,
+                'keepalives_interval': 10,
+                'keepalives_count': 5
+            }
+            conn = psycopg2.connect(os.environ['DATABASE_URL'], **conn_params)
             conn.close()
             dependencies_status["Database"] = True
             logger.info("Database connection: OK")
@@ -62,7 +74,7 @@ def check_service_dependencies():
             logger.error(f"File system check failed: {str(e)}")
         
         # Check Port
-        dependencies_status["Port Availability"] = check_port_availability(3000)
+        dependencies_status["Port Availability"] = check_port_availability(4200)
         
         # Check Environment
         required_vars = ['DATABASE_URL', 'FLASK_SECRET_KEY']
@@ -103,9 +115,21 @@ def verify_database_connection():
     """Verify PostgreSQL database connection"""
     try:
         logger.info("Verifying database connection...")
-        conn = psycopg2.connect(os.environ['DATABASE_URL'])
+        conn_params = {
+            'sslmode': 'require',
+            'sslcert': None,
+            'sslkey': None,
+            'sslrootcert': '/etc/ssl/certs/ca-certificates.crt',
+            'application_name': 'MedTracker',
+            'options': '-c statement_timeout=5000',
+            'keepalives': 1,
+            'keepalives_idle': 30,
+            'keepalives_interval': 10,
+            'keepalives_count': 5
+        }
+        conn = psycopg2.connect(os.environ['DATABASE_URL'], **conn_params)
         conn.close()
-        logger.info("Database connection successful")
+        logger.info("Database connection successful with SSL verification")
         return True
     except Exception as e:
         logger.error("Database connection failed: %s", str(e))
@@ -249,7 +273,7 @@ def verify_application_running():
             try:
                 # Check main endpoint
                 logger.info(f"Attempt {attempt + 1}/{max_attempts} - Checking main endpoint")
-                response = requests.get('http://localhost:3000/', timeout=timeout)
+                response = requests.get('http://localhost:4200/', timeout=timeout)
                 
                 if response.status_code in expected_status_codes:
                     log_response_details(response)
@@ -259,7 +283,7 @@ def verify_application_running():
                 
                 # Check health endpoint
                 try:
-                    health_response = requests.get(f'http://localhost:3000{health_endpoint}', timeout=timeout)
+                    health_response = requests.get(f'http://localhost:4200{health_endpoint}', timeout=timeout)
                     if health_response.status_code == 200:
                         logger.info("Health check endpoint responding correctly")
                     else:
@@ -295,6 +319,18 @@ def verify_application_running():
         logger.error("Full stack trace:", exc_info=True)
         return False
 
+def setup_ssl_certificates():
+    """Setup SSL certificates for database connection"""
+    try:
+        logger.info("Setting up SSL certificates...")
+        from generate_ssl import main as generate_ssl
+        cert_paths = generate_ssl()
+        logger.info("SSL certificates generated successfully")
+        return True
+    except Exception as e:
+        logger.error(f"Failed to setup SSL certificates: {e}")
+        return False
+
 def main():
     """Main deployment function with enhanced error handling and recovery"""
     deployment_id = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -314,6 +350,7 @@ def main():
     
     steps = [
         ("Checking environment variables", check_environment_variables),
+        ("Setting up SSL certificates", setup_ssl_certificates),
         ("Verifying database connection", verify_database_connection),
         ("Setting up database", setup_database),
         ("Creating upload directories", create_upload_directories),
@@ -350,7 +387,7 @@ def main():
         for step in steps:
             logger.info(f"✓ {step[0]}")
         logger.info("\nThe application is ready to run!")
-        logger.info("Access it at http://localhost:3000")
+        logger.info("Access it at http://localhost:4200")
         return True
     else:
         logger.error("=== Deployment Failed ===")

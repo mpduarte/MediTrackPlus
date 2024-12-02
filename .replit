@@ -32,7 +32,7 @@ task = "packager.installForAll"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "python3 run.py"
-waitForPort = 3003
+waitForPort = 4200
 
 [[workflows.workflow]]
 name = "Deploy Script"
@@ -47,29 +47,10 @@ task = "packager.installForAll"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "python deploy.py"
-waitForPort = 3000
 
 [deployment]
 run = ["sh", "-c", "python3 run.py"]
 
 [[ports]]
-localPort = 80
-
-[[ports]]
-localPort = 3000
-
-[[ports]]
-localPort = 3001
-
-[[ports]]
-localPort = 3002
-
-[[ports]]
-localPort = 3003
-
-[[ports]]
 localPort = 4200
 externalPort = 4200
-
-[[ports]]
-localPort = 5000

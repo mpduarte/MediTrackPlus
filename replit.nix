@@ -1,5 +1,6 @@
 {pkgs}: {
   deps = [
+    pkgs.cacert
     pkgs.file
     pkgs.zlib
     pkgs.tk
