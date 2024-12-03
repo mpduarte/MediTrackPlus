@@ -103,6 +103,10 @@ args = "System Requirements Completion Report"
 task = "workflow.run"
 args = "Install Script Check"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "README Check"
+
 [[workflows.workflow]]
 name = "Flask App"
 author = "agent"
@@ -840,6 +844,20 @@ task = "packager.installForAll"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cat install_raspberry_pi.sh"
+
+[[workflows.workflow]]
+name = "README Check"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cat README.md"
 
 [deployment]
 run = ["sh", "-c", "python3 run.py"]

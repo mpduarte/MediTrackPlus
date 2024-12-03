@@ -53,7 +53,9 @@ MedTracker is a comprehensive web application designed to help users manage thei
   - Chart.js for visualizations
   - Responsive design
 
-## Installation
+## Installation Instructions
+
+### Standard Installation
 
 1. Clone the repository:
 ```bash
@@ -80,6 +82,47 @@ flask db upgrade
 ```bash
 python run.py
 ```
+
+### Raspberry Pi Installation
+
+Before proceeding with the installation, ensure your Raspberry Pi meets the system requirements specified in the System Requirements section.
+
+1. Make installation scripts executable:
+```bash
+chmod +x install_raspberry_pi.sh
+chmod +x install.sh
+```
+
+2. Run Raspberry Pi specific installation:
+```bash
+sudo ./install_raspberry_pi.sh
+```
+This script will:
+- Enable required interfaces (I2C, SPI, 1-Wire)
+- Install Raspberry Pi specific packages
+- Set up temperature monitoring
+- Configure power management
+- Optimize system settings
+- Set up proper permissions
+
+3. After the system reboots, run the main installation:
+```bash
+sudo ./install.sh
+```
+
+4. Set up environment variables as described in the Standard Installation section.
+
+5. Initialize the database:
+```bash
+flask db upgrade
+```
+
+6. Run the application:
+```bash
+python run.py
+```
+
+Note: The Raspberry Pi installation script requires root privileges to configure hardware interfaces and system settings.
 
 ## Project Structure
 
