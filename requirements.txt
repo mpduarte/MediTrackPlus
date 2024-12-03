@@ -12,3 +12,4 @@ requests
 replit
 flask-migrate
 psycopg2-binary
+psutil
